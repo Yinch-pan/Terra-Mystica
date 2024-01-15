@@ -1,0 +1,9 @@
+K,R,S,G,U,Y,K,B,Y,S,G,Y,B
+U,I,I,K,B,I,I,U,B,I,I,U
+I,I,B,I,R,I,S,I,S,I,R,I,I
+S,G,U,I,I,Y,G,I,Y,I,Y,K
+B,K,Y,G,B,K,R,U,I,I,S,B,G
+R,S,I,I,U,S,I,I,I,K,R,K
+I,I,I,R,I,Y,I,S,I,U,B,G,U
+U,G,K,I,I,I,G,B,I,R,K,R
+Y,B,R,G,Y,S,U,K,R,I,G,S,Y
