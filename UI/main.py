@@ -3,6 +3,8 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QScrollArea, QDesktopWidget
 import map
 
+def chtype(a):
+    pass
 
 class MainWindow(QWidget):
     def __init__(self):
