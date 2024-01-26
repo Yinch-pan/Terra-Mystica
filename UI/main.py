@@ -1,10 +1,11 @@
+import os.path
 import sys
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QScrollArea, QDesktopWidget
 import map
 
-def chtype(a):
-    pass
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))
+print(BASE_DIR)
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -22,32 +23,30 @@ class MainWindow(QWidget):
         scroll_area = QScrollArea(self)
         scroll_area.setWidgetResizable(True)
 
-
         main_widget = QWidget(scroll_area)
-        scroll_area.setGeometry(0,0,1920,1080)
+        scroll_area.setGeometry(0, 0, 1920, 1080)
         scroll_area.setWidget(main_widget)
-
 
         main_layout = QGridLayout(main_widget)
 
-        map_area = map.map_area(self, "map12.txt")
+        map_area = map.map_area(self,path=BASE_DIR, map_name='map12.txt')
         main_layout.addWidget(map_area, 0, 0, 20, 20)
 
         cult_board = QLabel(self)
-        cult_board_pic = QPixmap('..\\images\\cult_board.jpg')
+        cult_board_pic = QPixmap(BASE_DIR+'\\images\\cult_board.jpg')
         cult_board.setScaledContents(True)
         cult_board.setPixmap(cult_board_pic)
         main_layout.addWidget(cult_board, 0, 20, 20, 10)
 
         function1 = QLabel(self)
-        function1_pic = QPixmap('..\\images\\functions\\base\\black\\Darklings.jpg')
+        function1_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
         function1_pic = function1_pic.scaledToHeight(function1_pic.height() // 2)
         function1.setScaledContents(True)
         function1.setPixmap(function1_pic)
         main_layout.addWidget(function1, 20, 0, 4, 15)
 
         function2 = QLabel(self)
-        function2_pic = QPixmap('..\\images\\functions\\base\\black\\Darklings.jpg')
+        function2_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
         function2_pic = function2_pic.scaledToHeight(function2_pic.height() // 2)
         function2.setScaledContents(True)
         function2.setPixmap(function2_pic)

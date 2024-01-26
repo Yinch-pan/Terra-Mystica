@@ -1,6 +1,7 @@
+import os
+import sys
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
-
 
 #
 #
@@ -13,15 +14,19 @@ from PyQt5.QtWidgets import *
 
 
 class map_area(QWidget):
-    def __init__(self, parent=None, map_name='map12'):
+    def __init__(self, parent=None,path=None,map_name='map12.txt'):
         super().__init__(parent)
+        self.BASE_DIR=path
         self.read_map(map_name)
         self.initUI()
 
+
     def read_map(self, map_name):
-        map_file_path = '..\\images\\maps\\'
+        map_file_path = os.path.join(self.BASE_DIR,"images\\maps")
         # map_name = 'map12.txt'
-        map_file_path = map_file_path + map_name
+        map_file_path = os.path.join(map_file_path,map_name)
+
+
         with open(map_file_path) as mp:
             area = mp.read().split()
         self.area = [i.split(',') for i in area]
@@ -32,7 +37,7 @@ class map_area(QWidget):
         Nc = 48
         Nr = 27
         area = [[QLabel(self) for i in range(Nc)] for j in range(Nr)]
-        image_path = 'E:/code/project/pythonProject/Terra Mystica/images/terrains_hexes.png'  # 替换为你的图片路径
+        image_path = self.BASE_DIR+'/images/terrains_hexes.png'  # 替换为你的图片路径
         full_pixmap = QPixmap(image_path)
         color = {"S": 0, "R": 1, "Y": 2, "U": 3, "K": 4, "B": 5, "G": 6, "I": 7}
 
