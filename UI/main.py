@@ -4,8 +4,10 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QScrollArea, QDesktopWidget
 import map
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))
-print(BASE_DIR)
+
+BASE_DIR = os.path.realpath(sys.argv[0])
+while not BASE_DIR.endswith('Terra-Mystica'):
+    BASE_DIR=os.path.dirname(BASE_DIR)
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -29,7 +31,7 @@ class MainWindow(QWidget):
 
         main_layout = QGridLayout(main_widget)
 
-        map_area = map.map_area(self,path=BASE_DIR, map_name='map12.txt')
+        map_area = map.map_area(self, map_name='map12.txt')
         main_layout.addWidget(map_area, 0, 0, 20, 20)
 
         cult_board = QLabel(self)

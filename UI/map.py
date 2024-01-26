@@ -3,26 +3,20 @@ import sys
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 
-#
-#
-# map_file_path='..\\images\\maps\\'
-# map_name='map12.txt'
-# map_file_path=map_file_path+map_name
-# with open(map_file_path) as mp:
-#     area=mp.read().split()
-#     print(area)
 
+BASE_DIR = os.path.realpath(sys.argv[0])
+while not BASE_DIR.endswith('Terra-Mystica'):
+    BASE_DIR=os.path.dirname(BASE_DIR)
 
 class map_area(QWidget):
-    def __init__(self, parent=None,path=None,map_name='map12.txt'):
+    def __init__(self, parent=None,map_name='map12.txt'):
         super().__init__(parent)
-        self.BASE_DIR=path
         self.read_map(map_name)
         self.initUI()
 
 
     def read_map(self, map_name):
-        map_file_path = os.path.join(self.BASE_DIR,"images\\maps")
+        map_file_path = os.path.join(BASE_DIR,"images\\maps")
         # map_name = 'map12.txt'
         map_file_path = os.path.join(map_file_path,map_name)
 
@@ -37,16 +31,16 @@ class map_area(QWidget):
         Nc = 48
         Nr = 27
         area = [[QLabel(self) for i in range(Nc)] for j in range(Nr)]
-        image_path = self.BASE_DIR+'/images/terrains_hexes.png'  # 替换为你的图片路径
+        image_path = BASE_DIR+'/images/terrains_hexes.png'  # 替换为你的图片路径
         full_pixmap = QPixmap(image_path)
         color = {"S": 0, "R": 1, "Y": 2, "U": 3, "K": 4, "B": 5, "G": 6, "I": 7}
 
         pixmap = []
         for i in range(7):
             tmp_pic = full_pixmap.copy(i * 137, 0, 136, full_pixmap.height())
-            # tmp_pic = tmp_pic.scaled(tmp_pic.height(), tmp_pic.width())
+            tmp_pic = tmp_pic.scaled(tmp_pic.height(), tmp_pic.width())
             # tmp_pic=tmp_pic.scaledToWidth(tmp_pic.width()//2)
-            # tmp_pic=tmp_pic.scaledToHeight(tmp_pic.height()//2)
+            tmp_pic=tmp_pic.scaledToHeight(tmp_pic.height()//2)
             pixmap.append(tmp_pic)
 
         for i in range(0, Nr):
