@@ -32,6 +32,7 @@ class MainWindow(QWidget):
         main_layout = QGridLayout(main_widget)
 
         map_area = map.map_area(self, map_name='map12.txt')
+        main_layout.setSpacing(0)
         main_layout.addWidget(map_area, 0, 0, 20, 20)
 
         cult_board = QLabel(self)

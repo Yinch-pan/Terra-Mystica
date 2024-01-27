@@ -1,70 +1,40 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QVBoxLayout, QWidget
-from PyQt5.QtCore import Qt, QPointF, QSizeF
+from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel
 
 
-class ResizableGridLayout(QWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setLayout(QVBoxLayout())
-        self.setCursor(Qt.PointingHandCursor)
-
-        self.mouse_press_position = QPointF(0, 0)
-        self.offset = QPointF(0, 0)
-        self.scale_factor = 1.0
-
-        for i in range(3):  # 3x3 grid example
-            for j in range(3):
-                label = QLabel(f'Cell {i+1}-{j+1}', self)
-                label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-                label.setStyleSheet('border: 1px solid black;')  # Optional: Add borders for better visibility
-                self.layout().addWidget(label)
-
-    def wheelEvent(self, event):
-        # 缩放因子
-        factor = 1.2
-
-        # 根据滚轮方向调整缩放因子
-        if event.angleDelta().y() < 0:
-            self.scale_factor /= factor
-        else:
-            self.scale_factor *= factor
-
-        # 设置缩放变换
-        self.setTransformOriginPoint(self.width() / 2, self.height() / 2)
-        self.setScaledContents(True)
-        self.setFixedSize(QSizeF(self.size()) * self.scale_factor)
-        self.update()
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.MouseButton.LeftButton:
-            self.mouse_press_position = event.globalPos()
-            self.offset = self.mouse_press_position - self.pos()
-
-    def mouseMoveEvent(self, event):
-        if event.buttons() == Qt.MouseButton.LeftButton:
-            global_pos = event.globalPos()
-            moved = global_pos - self.mouse_press_position
-            self.move(moved + self.offset)
-
-
-class MainWindow(QMainWindow):
+class NoSpacingInNestedGridLayout(QWidget):
     def __init__(self):
         super().__init__()
 
-        central_widget = QWidget(self)
-        self.setCentralWidget(central_widget)
+        # 创建主网格布局
+        main_layout = QGridLayout(self)
+        main_layout.setSpacing(0)  # 设置主布局的间隙为零
 
-        layout = QVBoxLayout(central_widget)
-        resizable_grid_layout = ResizableGridLayout(central_widget)
-        layout.addWidget(resizable_grid_layout)
+        # 创建第一个子网格布局
+        layout1 = QGridLayout()
+        label1 = QLabel('子布局1 - 行1列1')
+        layout1.addWidget(label1, 0, 0)
+        label2 = QLabel('子布局1 - 行1列2')
+        layout1.addWidget(label2, 0, 1)
+        main_layout.addLayout(layout1, 0, 0)
 
-        self.setGeometry(100, 100, 500, 500)
-        self.setWindowTitle('可拖动和缩放的网格布局')
+        # 创建第二个子网格布局
+        layout2 = QGridLayout()
+        label3 = QLabel('子布局2 - 行1列1')
+        layout2.addWidget(label3, 0, 0)
+        label4 = QLabel('子布局2 - 行2列1')
+        layout2.addWidget(label4, 1, 0)
+        main_layout.addLayout(layout2, 0, 1)
+
+        # 设置主窗口大小
+        self.setGeometry(100, 100, 400, 200)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
-    sys.exit(app.exec())
+
+    no_spacing_in_nested_grid_layout = NoSpacingInNestedGridLayout()
+    no_spacing_in_nested_grid_layout.setWindowTitle('取消两个嵌套网格布局之间的间隙')
+    no_spacing_in_nested_grid_layout.show()
+
+    sys.exit(app.exec_())
