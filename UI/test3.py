@@ -1,96 +1,42 @@
 import sys
-import os
-import math as mth
-from collections import Counter, deque, defaultdict
-from heapq import nsmallest, nlargest, heapify, heappop, heappush
-from io import BytesIO, IOBase
-import bisect
-
-# sys.setrecursionlimit(10**6)
-BUFSIZE = 4096
-MOD = 10 ** 9 + 7
-MODD = 998244353
-inf = float('inf')
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 
-class FastIO(IOBase):
-    newlines = 0
+class BlurredImageWidget(QWidget):
+    def __init__(self):
+        super().__init__()
 
-    def __init__(self, file):
-        self._fd = file.fileno()
-        self.buffer = BytesIO()
-        self.writable = "x" in file.mode or "r" not in file.mode
-        self.write = self.buffer.write if self.writable else None
+        layout = QVBoxLayout(self)
 
-    def read(self):
-        while True:
-            b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))
-            if not b:
-                break
-            ptr = self.buffer.tell()
-            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)
-        self.newlines = 0
-        return self.buffer.read()
+        # 加载图片
+        pixmap = QPixmap('E:\code\project\Terra-Mystica\images\landscape_tiles.png')  # 替换为你的图片路径
 
-    def readline(self):
-        while self.newlines == 0:
-            b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))
-            self.newlines = b.count(b"\n") + (not b)
-            ptr = self.buffer.tell()
-            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)
-        self.newlines -= 1
-        return self.buffer.readline()
+        # 创建包含图片的 QLabel
+        image_label = QLabel(self)
+        image_label.setPixmap(pixmap)
 
-    def flush(self):
-        if self.writable:
-            os.write(self._fd, self.buffer.getvalue())
-            self.buffer.truncate(0), self.buffer.seek(0)
+        # 添加羽化效果
+        blur_effect = QGraphicsBlurEffect()
+        blur_effect.setBlurRadius(2)  # 设置模糊半径，值越大越模糊
+        image_label.setGraphicsEffect(blur_effect)
+
+        layout.addWidget(image_label)
+
+        # 创建包含图片的 QLabel
+        image_label2 = QLabel(self)
+        image_label2.setPixmap(pixmap)
+
+        layout.addWidget(image_label2)
 
 
-from types import GeneratorType
 
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
 
-def bootstrap(f, stack=[]):
-    def wrappedfunc(*args, **kwargs):
-        if stack: return f(*args, **kwargs)
-        to = f(*args, **kwargs)
-        while True:
-            if type(to) is GeneratorType:
-                stack.append(to)
-                to = next(to)
-            else:
-                stack.pop()
-                if not stack: break
-                to = stack[-1].send(to)
-        return to
+    blurred_image_widget = BlurredImageWidget()
+    blurred_image_widget.setWindowTitle('图片羽化效果')
+    blurred_image_widget.setGeometry(100, 100, 300, 300)
+    blurred_image_widget.show()
 
-    return wrappedfunc
-
-
-class IOWrapper(IOBase):
-    def __init__(self, file):
-        self.buffer = FastIO(file)
-        self.flush = self.buffer.flush
-        self.writable = self.buffer.writable
-        self.write = lambda s: self.buffer.write(s.encode("ascii"))
-        self.read = lambda: self.buffer.read().decode("ascii")
-        self.readline = lambda: self.buffer.readline().decode("ascii")
-
-
-sys.stdin, sys.stdout = IOWrapper(sys.stdin), IOWrapper(sys.stdout)
-
-input = lambda: sys.stdin.readline().rstrip("\r\n")
-I = lambda: input()
-II = lambda: int(input())
-MI = lambda: map(str, input().split())
-MII = lambda: map(int, input().split())
-LI = lambda: list(input().split())
-LII = lambda: list(map(int, input().split()))
-ZLI = lambda: [0] + list(map(int, input().split()))
-
-
-def solve():
-
-
-for case in range(II()):
-    solve()
+    sys.exit(app.exec_())

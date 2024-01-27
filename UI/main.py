@@ -22,24 +22,24 @@ class MainWindow(QWidget):
 
         self.setWindowTitle('Terra Mystica')  # 设置窗口标题
 
-        scroll_area = QScrollArea(self)
-        scroll_area.setWidgetResizable(True)
+        # scroll_area = QScrollArea(self)
+        # scroll_area.setWidgetResizable(True)
+        #
+        # main_widget = QWidget(scroll_area)
+        # scroll_area.setGeometry(0, 0, 1920, 1080)
+        # scroll_area.setWidget(main_widget)
 
-        main_widget = QWidget(scroll_area)
-        scroll_area.setGeometry(0, 0, 1920, 1080)
-        scroll_area.setWidget(main_widget)
-
-        main_layout = QGridLayout(main_widget)
+        main_layout = QGridLayout()
 
         map_area = map.map_area(self, map_name='map12.txt')
         main_layout.setSpacing(0)
-        main_layout.addWidget(map_area, 0, 0, 20, 20)
+        main_layout.addWidget(map_area, 0, 0, 3,5)
 
-        cult_board = QLabel(self)
-        cult_board_pic = QPixmap(BASE_DIR+'\\images\\cult_board.jpg')
-        cult_board.setScaledContents(True)
-        cult_board.setPixmap(cult_board_pic)
-        main_layout.addWidget(cult_board, 0, 20, 20, 10)
+        # cult_board = QLabel(self)
+        # cult_board_pic = QPixmap(BASE_DIR+'\\images\\cult_board.jpg')
+        # cult_board.setScaledContents(True)
+        # cult_board.setPixmap(cult_board_pic)
+        # main_layout.addWidget(cult_board, 0, 20, 20, 10)
 
         function1 = QLabel(self)
         function1_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
@@ -55,8 +55,8 @@ class MainWindow(QWidget):
         function2.setPixmap(function2_pic)
         main_layout.addWidget(function2, 20, 16, 10, 15)
 
-        scroll_area.setVerticalScrollBarPolicy(0x2)  # 始终显示垂直滚动条
-
+        # scroll_area.setVerticalScrollBarPolicy(0x2)  # 始终显示垂直滚动条
+        self.setLayout(main_layout)
         self.show()  # 显示窗口
 
 
