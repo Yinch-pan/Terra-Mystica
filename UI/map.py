@@ -51,7 +51,6 @@ class map_area(QWidget):
                     col = color[self.area[i // 3][j // 4]]
                     if col != 7:
                         ny+=1
-                        print(nx,ny)
                         area[nx][ny]=piece.Piece(col)
                         # area[i][j].setScaledContents(True)
                         # area[i][j].setPixmap(pixmap[col])

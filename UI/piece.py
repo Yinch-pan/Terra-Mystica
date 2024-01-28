@@ -157,6 +157,7 @@ class Piece(QWidget):
 
     def build_te(self):
         self.stu = 'te'
+        print(1)
         self.stu_tp.deleteLater()
         image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
@@ -176,7 +177,7 @@ class Piece(QWidget):
             stu_te_all.append(real_pic)
 
         self.stu_te = QLabel()
-        self.stu_tp.setScaledContents(True)
+        self.stu_te.setScaledContents(True)
         self.stu_te.setPixmap(stu_te_all[self.col])
         self.Grid.addWidget(self.stu_te, 0, 0, 20, 20)
 
@@ -226,7 +227,7 @@ class Piece(QWidget):
             stu_sa_all.append(real_pic)
 
         self.stu_sa = QLabel()
-        self.stu_sh.setScaledContents(True)
+        self.stu_sa.setScaledContents(True)
         self.stu_sa.setPixmap(stu_sa_all[self.col])
         self.Grid.addWidget(self.stu_sa, 0, 0, 20, 20)
 
