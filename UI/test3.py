@@ -1,42 +1,51 @@
 import sys
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QApplication, QWidget, QMenu, QAction, QVBoxLayout, QLabel
+from PyQt5.QtCore import Qt
 
 
-class BlurredImageWidget(QWidget):
+class PopupMenuExample(QWidget):
     def __init__(self):
         super().__init__()
 
         layout = QVBoxLayout(self)
 
-        # 加载图片
-        pixmap = QPixmap('E:\code\project\Terra-Mystica\images\landscape_tiles.png')  # 替换为你的图片路径
+        # 创建一个 QLabel 用于显示消息
+        self.message_label = QLabel('右键点击以弹出菜单', self)
+        layout.addWidget(self.message_label)
 
-        # 创建包含图片的 QLabel
-        image_label = QLabel(self)
-        image_label.setPixmap(pixmap)
+    def contextMenuEvent(self, event):
+        # 鼠标右键点击事件，弹出菜单
+        menu = QMenu(self)
 
-        # 添加羽化效果
-        blur_effect = QGraphicsBlurEffect()
-        blur_effect.setBlurRadius(2)  # 设置模糊半径，值越大越模糊
-        image_label.setGraphicsEffect(blur_effect)
+        # 创建菜单项
+        action1 = QAction('选项1', self)
+        action1.triggered.connect(lambda: self.show_message('选项1被点击'))
 
-        layout.addWidget(image_label)
+        action2 = QAction('选项2', self)
+        action2.triggered.connect(lambda: self.show_message('选项2被点击'))
 
-        # 创建包含图片的 QLabel
-        image_label2 = QLabel(self)
-        image_label2.setPixmap(pixmap)
+        action3 = QAction('选项3', self)
+        action3.triggered.connect(lambda: self.show_message('选项3被点击'))
 
-        layout.addWidget(image_label2)
+        # 将菜单项添加到菜单
+        menu.addAction(action1)
+        menu.addAction(action2)
+        menu.addAction(action3)
 
+        # 显示菜单
+        menu.exec_(event.globalPos())
+
+    def show_message(self, text):
+        # 在 QLabel 中显示消息
+        self.message_label.setText(text)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    blurred_image_widget = BlurredImageWidget()
-    blurred_image_widget.setWindowTitle('图片羽化效果')
-    blurred_image_widget.setGeometry(100, 100, 300, 300)
-    blurred_image_widget.show()
+    popup_menu_example = PopupMenuExample()
+    popup_menu_example.setWindowTitle('鼠标左键弹出列表选项')
+    popup_menu_example.setGeometry(100, 100, 400, 200)
+    popup_menu_example.show()
 
     sys.exit(app.exec_())

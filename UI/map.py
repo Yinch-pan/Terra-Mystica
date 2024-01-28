@@ -27,14 +27,14 @@ class map_area(QWidget):
 
     def initUI(self):
         map_area = QGridLayout()
-        Nc = 48
+        Nc = 48+1
         Nr = 27
         area = [[None for i in range(Nc)] for j in range(Nr)]
         map_area.setSpacing(0)
         # image_path = BASE_DIR+'/images/terrains_hexes.png'  # 替换为你的图片路径
         # full_pixmap = QPixmap(image_path)
 
-        color = {"S": 0, "R": 1, "Y": 2, "U": 3, "K": 4, "B": 5, "G": 6, "I": 7}
+        color = {"G": 0, "Y": 1, "B": 2, "U": 3, "R": 4, "K": 5, "S": 6, "I": 7}
 
         # pixmap = []
         # for i in range(7):
