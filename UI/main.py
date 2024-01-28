@@ -41,19 +41,19 @@ class MainWindow(QWidget):
         # cult_board.setPixmap(cult_board_pic)
         # main_layout.addWidget(cult_board, 0, 20, 20, 10)
 
-        function1 = QLabel(self)
-        function1_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
-        function1_pic = function1_pic.scaledToHeight(function1_pic.height() // 2)
-        function1.setScaledContents(True)
-        function1.setPixmap(function1_pic)
-        main_layout.addWidget(function1, 20, 0, 4, 15)
-
-        function2 = QLabel(self)
-        function2_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
-        function2_pic = function2_pic.scaledToHeight(function2_pic.height() // 2)
-        function2.setScaledContents(True)
-        function2.setPixmap(function2_pic)
-        main_layout.addWidget(function2, 20, 16, 10, 15)
+        # function1 = QLabel(self)
+        # function1_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
+        # function1_pic = function1_pic.scaledToHeight(function1_pic.height() // 2)
+        # function1.setScaledContents(True)
+        # function1.setPixmap(function1_pic)
+        # main_layout.addWidget(function1, 20, 0, 4, 15)
+        #
+        # function2 = QLabel(self)
+        # function2_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
+        # function2_pic = function2_pic.scaledToHeight(function2_pic.height() // 2)
+        # function2.setScaledContents(True)
+        # function2.setPixmap(function2_pic)
+        # main_layout.addWidget(function2, 20, 16, 10, 15)
 
         # scroll_area.setVerticalScrollBarPolicy(0x2)  # 始终显示垂直滚动条
         self.setLayout(main_layout)

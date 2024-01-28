@@ -29,7 +29,7 @@ class map_area(QWidget):
         map_area = QGridLayout()
         Nc = 48+1
         Nr = 27
-        area = [[None for i in range(Nc)] for j in range(Nr)]
+        area = [[None for i in range(14)] for j in range(10)]
         map_area.setSpacing(0)
         # image_path = BASE_DIR+'/images/terrains_hexes.png'  # 替换为你的图片路径
         # full_pixmap = QPixmap(image_path)
@@ -41,13 +41,18 @@ class map_area(QWidget):
         #     tmp_pic = full_pixmap.copy(i * 137, 0, 136, full_pixmap.height())
         #     tmp_pic = tmp_pic.scaled(tmp_pic.height()//2, tmp_pic.width())
         #     pixmap.append(tmp_pic)
-
-        for i in range(0, Nr):
+        nx=-1
+        ny=-1
+        for i in range(0, Nr,3):
+            nx+=1
+            ny=-1
             for j in range(0, Nc, 2):
                 if (i % 6 == 0 and j % 4 == 0) or (i % 6 == 3 and j % 4 == 2 and j != Nc - 2):
                     col = color[self.area[i // 3][j // 4]]
                     if col != 7:
-                        area[i][j]=piece.Piece(col)
+                        ny+=1
+                        print(nx,ny)
+                        area[nx][ny]=piece.Piece(col)
                         # area[i][j].setScaledContents(True)
                         # area[i][j].setPixmap(pixmap[col])
 
@@ -55,7 +60,7 @@ class map_area(QWidget):
                     # a=QWidget()
                     # a.setStyleSheet('background-color: red;')
                     # map_area.addWidget(a,i,j,4,4)
-                    map_area.addWidget(area[i][j], i, j, 4, 4)
+                    map_area.addWidget(area[nx][ny], i, j, 4, 4)
         map_area.setSpacing(0)
 
         self.setLayout(map_area)

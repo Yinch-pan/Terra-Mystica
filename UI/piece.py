@@ -22,6 +22,8 @@ class Piece(QWidget):
         self.real_height = int(156 * self.size_factor)
         self.ground_size_factor = 0.9
         self.stu_size_factor = 0.7
+        if col==7:
+            return
         self.init_ui()
         self.colors_dict = {"green": 0, "yellow": 1, "blue": 2, "brown": 3, "red": 4, "black": 5, "gray": 6, "ice": 7,
                        "lava": 8}
@@ -124,7 +126,7 @@ class Piece(QWidget):
             stu_d_all.append(real_pic)
 
         self.stu_d = QLabel()
-        # self.stu_d.setScaledContents(True)
+        self.stu_d.setScaledContents(True)
         self.stu_d.setPixmap(stu_d_all[self.col])
         self.Grid.addWidget(self.stu_d, 0, 0, 20, 20)
 
@@ -149,7 +151,7 @@ class Piece(QWidget):
             stu_tp_all.append(real_pic)
 
         self.stu_tp = QLabel()
-        # self.stu_tp.setScaledContents(True)
+        self.stu_tp.setScaledContents(True)
         self.stu_tp.setPixmap(stu_tp_all[self.col])
         self.Grid.addWidget(self.stu_tp, 0, 0, 20, 20)
 
@@ -174,7 +176,7 @@ class Piece(QWidget):
             stu_te_all.append(real_pic)
 
         self.stu_te = QLabel()
-        # self.stu_tp.setScaledContents(True)
+        self.stu_tp.setScaledContents(True)
         self.stu_te.setPixmap(stu_te_all[self.col])
         self.Grid.addWidget(self.stu_te, 0, 0, 20, 20)
 
@@ -199,7 +201,7 @@ class Piece(QWidget):
             stu_sh_all.append(real_pic)
 
         self.stu_sh = QLabel()
-        # self.stu_sh.setScaledContents(True)
+        self.stu_sh.setScaledContents(True)
         self.stu_sh.setPixmap(stu_sh_all[self.col])
         self.Grid.addWidget(self.stu_sh, 0, 0, 20, 20)
 
@@ -224,7 +226,7 @@ class Piece(QWidget):
             stu_sa_all.append(real_pic)
 
         self.stu_sa = QLabel()
-        # self.stu_sh.setScaledContents(True)
+        self.stu_sh.setScaledContents(True)
         self.stu_sa.setPixmap(stu_sa_all[self.col])
         self.Grid.addWidget(self.stu_sa, 0, 0, 20, 20)
 
@@ -249,9 +251,9 @@ class Piece(QWidget):
             ls_shapes.append(real_pic)
 
         self.ls_shape = QLabel()
-        # change_shape.setScaledContents(True)
+        self.ls_shape.setScaledContents(True)
         self.ls_shape.setPixmap(ls_shapes[1])
-        self.Grid.addWidget(self.ls_shape, 10, 10, 1, 1)
+        self.Grid.addWidget(self.ls_shape, 0, 0, 20, 20)
 
     def upgrate1(self):
         if self.stu == None:
