@@ -45,19 +45,14 @@ class map_area(QWidget):
         for i in range(0, Nr,3):
             nx+=1
             ny=-1
+            river=0
             for j in range(0, Nc, 2):
                 if (i % 6 == 0 and j % 4 == 0) or (i % 6 == 3 and j % 4 == 2 and j != Nc - 2):
                     col = color[self.area[i // 3][j // 4]]
-                    # if col != 7:
+                    if col == 7:river+=1
                     ny+=1
-                    area[nx][ny]=piece.Piece(col)
-                        # area[i][j].setScaledContents(True)
-                        # area[i][j].setPixmap(pixmap[col])
-
-                        # area[i][j].setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-                    # a=QWidget()
-                    # a.setStyleSheet('background-color: red;')
-                    # map_area.addWidget(a,i,j,4,4)
+                    area[nx][ny]=piece.Piece(col,nx,ny,river)
+                    # area[nx][ny].setScaledContents(True)
                     map_area.addWidget(area[nx][ny], i, j, 4, 4)
         map_area.setSpacing(0)
 

@@ -14,8 +14,11 @@ while not BASE_PATH.endswith('Terra-Mystica'):
 
 
 class Piece(QWidget):
-    def __init__(self, col):
+    def __init__(self, col,i,j,ri):
         super().__init__()
+        self.pos_x=i
+        self.pos_y=j
+        self.suf_river=ri
         self.col = col
         self.size_factor = 0.8
         self.stu = None
@@ -41,11 +44,12 @@ class Piece(QWidget):
         self.Grid.setContentsMargins(0, 0, 0, 0)
         if self.col!=7:
             self.build_background()
-        # self.build_brige1(1)
-        # self.build_brige2(1)
-        self.build_brige3(1)
 
         self.setLayout(self.Grid)
+
+        self.build_brige1(1)
+        self.build_brige2(2)
+        self.build_brige3(3)
 
     def build_background(self):
         # 7个地形
@@ -74,14 +78,35 @@ class Piece(QWidget):
         background.setScaledContents(True)
         background.setPixmap(seven_shapes[self.col])
         self.Grid.addWidget(background, 0, 0, 20, 20)
+        self.show_position()
 
-        # self.change_ground(random.randint(0 , 0))
-        # self.build_landscape(random.randint(0,18))
-        # self.build_sh()
-        # self.build_tp()
-        # self.build_d()
+    def show_position(self):
+
+        org_pic = QPixmap(self.real_width, self.real_height)
+        org_pic.fill(QColor(Qt.transparent))
+        org_pic = org_pic.scaled(int(org_pic.width() * self.size_factor), int(org_pic.height() * self.size_factor))
+        painter = QPainter(org_pic)
+        font = QFont("Arial", 12)
+        painter.setFont(font)
+        painter.drawText(org_pic.rect(), Qt.AlignCenter, f"{chr(self.pos_x+65)}{self.pos_y+1-self.suf_river}")
+        painter.end()
 
 
+        real_pic = QPixmap(self.real_width, self.real_height)
+        real_pic.fill(QColor(Qt.transparent))  # 使用透明色填充作为背景
+        painter = QPainter(real_pic)
+        mo_w = int(real_pic.width() * 0)
+        mo_h = int(real_pic.height() * 0.3)
+
+        painter.drawPixmap((real_pic.width() - org_pic.width()) // 2+mo_w, (real_pic.height() - org_pic.height()) // 2+mo_h,
+                           org_pic)
+        painter.end()
+
+
+        self.position = QLabel()
+        self.position.setScaledContents(True)
+        self.position.setPixmap(real_pic)
+        self.Grid.addWidget(self.position, 0, 0, 20, 20)
     def change_ground(self, col):
         # 9个转换地形图片
         self.col = col
@@ -456,6 +481,7 @@ class Piece(QWidget):
                     # menu.addAction(action_transform)
 
             menu.exec_(event.globalPos())
+            self.position.raise_()
 
 
 
