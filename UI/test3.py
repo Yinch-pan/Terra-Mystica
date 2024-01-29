@@ -1,51 +1,40 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QMenu, QAction, QVBoxLayout, QLabel
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton, QLabel
+from PyQt5.QtCore import Qt, QPoint
 
 
-class PopupMenuExample(QWidget):
+class GridPositionExample(QWidget):
     def __init__(self):
         super().__init__()
 
-        layout = QVBoxLayout(self)
+        self.grid_layout = QGridLayout(self)
 
-        # 创建一个 QLabel 用于显示消息
-        self.message_label = QLabel('右键点击以弹出菜单', self)
-        layout.addWidget(self.message_label)
+        button1 = QPushButton('Button 1', self)
+        self.grid_layout.addWidget(button1, 0, 0)
 
-    def contextMenuEvent(self, event):
-        # 鼠标右键点击事件，弹出菜单
-        menu = QMenu(self)
+        button2 = QPushButton('Button 2', self)
+        self.grid_layout.addWidget(button2, 1, 1)
 
-        # 创建菜单项
-        action1 = QAction('选项1', self)
-        action1.triggered.connect(lambda: self.show_message('选项1被点击'))
+        self.label = QLabel(self)
+        self.grid_layout.addWidget(self.label, 2, 2)
 
-        action2 = QAction('选项2', self)
-        action2.triggered.connect(lambda: self.show_message('选项2被点击'))
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            relative_pos = self.mapFromGlobal(event.globalPos())
+            item = self.grid_layout.itemAtPosition(relative_pos.y(), relative_pos.x())
 
-        action3 = QAction('选项3', self)
-        action3.triggered.connect(lambda: self.show_message('选项3被点击'))
-
-        # 将菜单项添加到菜单
-        menu.addAction(action1)
-        menu.addAction(action2)
-        menu.addAction(action3)
-
-        # 显示菜单
-        menu.exec_(event.globalPos())
-
-    def show_message(self, text):
-        # 在 QLabel 中显示消息
-        self.message_label.setText(text)
+            if item is not None:
+                widget = item.widget()
+                if widget:
+                    self.label.setText(f'Clicked on: {widget.text()}')
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    popup_menu_example = PopupMenuExample()
-    popup_menu_example.setWindowTitle('鼠标左键弹出列表选项')
-    popup_menu_example.setGeometry(100, 100, 400, 200)
-    popup_menu_example.show()
+    grid_position_example = GridPositionExample()
+    grid_position_example.setWindowTitle('获取鼠标相对位置的示例')
+    grid_position_example.setGeometry(100, 100, 300, 200)
+    grid_position_example.show()
 
     sys.exit(app.exec_())

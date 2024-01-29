@@ -1,8 +1,10 @@
 import os.path
 import sys
+
+from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QScrollArea, QDesktopWidget
-import map
+import grid
 
 
 BASE_DIR = os.path.realpath(sys.argv[0])
@@ -15,50 +17,18 @@ class MainWindow(QWidget):
 
         screen = QDesktopWidget().screenGeometry()
         self.screen_width, self.screen_height = screen.width(), screen.height()
+
         self.initUI()
 
     def initUI(self):
         self.setGeometry(0, 0, 1920, 1080)  # 设置窗口的位置和大小
 
         self.setWindowTitle('Terra Mystica')  # 设置窗口标题
-
-        # scroll_area = QScrollArea(self)
-        # scroll_area.setWidgetResizable(True)
-        #
-        # main_widget = QWidget(scroll_area)
-        # scroll_area.setGeometry(0, 0, 1920, 1080)
-        # scroll_area.setWidget(main_widget)
-
-        main_layout = QGridLayout()
-
-        map_area = map.map_area(self, map_name='map12.txt')
-        main_layout.setSpacing(0)
-        main_layout.addWidget(map_area, 0, 0, 3,5)
-
-        # cult_board = QLabel(self)
-        # cult_board_pic = QPixmap(BASE_DIR+'\\images\\cult_board.jpg')
-        # cult_board.setScaledContents(True)
-        # cult_board.setPixmap(cult_board_pic)
-        # main_layout.addWidget(cult_board, 0, 20, 20, 10)
-
-        # function1 = QLabel(self)
-        # function1_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
-        # function1_pic = function1_pic.scaledToHeight(function1_pic.height() // 2)
-        # function1.setScaledContents(True)
-        # function1.setPixmap(function1_pic)
-        # main_layout.addWidget(function1, 20, 0, 4, 15)
-        #
-        # function2 = QLabel(self)
-        # function2_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
-        # function2_pic = function2_pic.scaledToHeight(function2_pic.height() // 2)
-        # function2.setScaledContents(True)
-        # function2.setPixmap(function2_pic)
-        # main_layout.addWidget(function2, 20, 16, 10, 15)
-
-        # scroll_area.setVerticalScrollBarPolicy(0x2)  # 始终显示垂直滚动条
+        main_layout=QGridLayout()
+        grid_content=grid.Grid()
+        main_layout.addWidget(grid_content)
         self.setLayout(main_layout)
-        self.show()  # 显示窗口
-
+        self.show()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

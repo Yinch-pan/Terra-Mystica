@@ -42,16 +42,15 @@ class map_area(QWidget):
         #     tmp_pic = tmp_pic.scaled(tmp_pic.height()//2, tmp_pic.width())
         #     pixmap.append(tmp_pic)
         nx=-1
-        ny=-1
         for i in range(0, Nr,3):
             nx+=1
             ny=-1
             for j in range(0, Nc, 2):
                 if (i % 6 == 0 and j % 4 == 0) or (i % 6 == 3 and j % 4 == 2 and j != Nc - 2):
                     col = color[self.area[i // 3][j // 4]]
-                    if col != 7:
-                        ny+=1
-                        area[nx][ny]=piece.Piece(col)
+                    # if col != 7:
+                    ny+=1
+                    area[nx][ny]=piece.Piece(col)
                         # area[i][j].setScaledContents(True)
                         # area[i][j].setPixmap(pixmap[col])
 

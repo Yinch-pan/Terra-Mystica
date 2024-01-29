@@ -6,6 +6,7 @@ import time
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import grid
 
 BASE_PATH = os.path.realpath(sys.argv[0])
 while not BASE_PATH.endswith('Terra-Mystica'):
@@ -22,12 +23,10 @@ class Piece(QWidget):
         self.real_height = int(156 * self.size_factor)
         self.ground_size_factor = 0.9
         self.stu_size_factor = 0.7
-        if col==7:
-            return
         self.init_ui()
         self.colors_dict = {"green": 0, "yellow": 1, "blue": 2, "brown": 3, "red": 4, "black": 5, "gray": 6, "ice": 7,
-                       "lava": 8}
-        self.colors_list=["green","yellow","blue","brown","red","black","gray","ice","lava"]
+                            "lava": 8}
+        self.colors_list = ["green", "yellow", "blue", "brown", "red", "black", "gray", "ice", "lava"]
         #   0      1     2    3    4    5     6   7    8
         # green,yellow,blue,brown,red,black,gray,ice,lava
         self.dis = [0, 6, 4, 1, 3, 5, 2]
@@ -40,7 +39,12 @@ class Piece(QWidget):
         self.Grid = QGridLayout()  # 建立网格布局
         self.Grid.setSpacing(0)
         self.Grid.setContentsMargins(0, 0, 0, 0)
-        self.build_background()
+        if self.col!=7:
+            self.build_background()
+        # self.build_brige1(1)
+        # self.build_brige2(1)
+        self.build_brige3(1)
+
         self.setLayout(self.Grid)
 
     def build_background(self):
@@ -77,9 +81,10 @@ class Piece(QWidget):
         # self.build_tp()
         # self.build_d()
 
+
     def change_ground(self, col):
         # 9个转换地形图片
-        self.col=col
+        self.col = col
         image_path = os.path.join(BASE_PATH, 'images', 'terrain_tiles.png')
         full_pixmap = QPixmap(image_path)
         transformed_shapes = []
@@ -98,8 +103,10 @@ class Piece(QWidget):
             transformed_shapes.append(real_pic)
         transformed_shapes[0], transformed_shapes[1] = transformed_shapes[1], transformed_shapes[0]
         transformed_shapes[7], transformed_shapes[8] = transformed_shapes[8], transformed_shapes[7]
-        transformed_shapes[5], transformed_shapes[4], transformed_shapes[2], transformed_shapes[6],transformed_shapes[3] = \
-            transformed_shapes[2], transformed_shapes[3], transformed_shapes[4], transformed_shapes[5],transformed_shapes[6]
+        transformed_shapes[5], transformed_shapes[4], transformed_shapes[2], transformed_shapes[6], transformed_shapes[
+            3] = \
+            transformed_shapes[2], transformed_shapes[3], transformed_shapes[4], transformed_shapes[5], \
+            transformed_shapes[6]
 
         change_shape = QLabel()
         change_shape.setScaledContents(True)
@@ -256,6 +263,90 @@ class Piece(QWidget):
         self.ls_shape.setPixmap(ls_shapes[1])
         self.Grid.addWidget(self.ls_shape, 0, 0, 20, 20)
 
+    def build_brige1(self,col):
+        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        full_pixmap = QPixmap(image_path)
+        stu_br1_all = []
+        for i in range(9):
+            org_pic = full_pixmap.copy(i * 141, 1100, 140, 160)
+            org_pic = org_pic.scaled(int(org_pic.width() * self.size_factor * self.stu_size_factor),
+                                     int(org_pic.height() * self.size_factor * self.stu_size_factor))
+
+            real_pic = QPixmap(self.real_width, self.real_height)
+            real_pic.fill(QColor(Qt.transparent))  # 使用透明色填充作为背景
+
+            mo_w=int(real_pic.width()*0.2)
+            mo_h=int(real_pic.height()*0.3)
+
+            painter = QPainter(real_pic)
+            painter.drawPixmap((real_pic.width() - org_pic.width()) // 2-mo_w, (real_pic.height() - org_pic.height()) // 2+mo_h,
+                               org_pic)
+            painter.end()
+            stu_br1_all.append(real_pic)
+
+        self.stu_br1 = QLabel()
+        self.stu_br1.setScaledContents(True)
+        self.stu_br1.setPixmap(stu_br1_all[col])
+        self.Grid.addWidget(self.stu_br1, 0, 0, 20, 20)
+
+    def build_brige2(self,col):
+        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        full_pixmap = QPixmap(image_path)
+        stu_br2_all = []
+        for i in range(9):
+            org_pic = full_pixmap.copy(i * 141, 1100, 140, 160)
+            org_pic = org_pic.scaled(int(org_pic.width() * self.size_factor * self.stu_size_factor),
+                                     int(org_pic.height() * self.size_factor * self.stu_size_factor))
+
+            real_pic = QPixmap(self.real_width, self.real_height)
+            real_pic.fill(QColor(Qt.transparent))  # 使用透明色填充作为背景
+
+            mo_w=int(real_pic.width()*0.46)
+            mo_h=int(real_pic.height()*0)
+
+            org_pic = org_pic.transformed(QTransform().rotate(-123), mode=Qt.SmoothTransformation)
+
+            painter = QPainter(real_pic)
+            painter.drawPixmap((real_pic.width() - org_pic.width()) // 2-mo_w, (real_pic.height() - org_pic.height()) // 2-mo_h,
+                               org_pic)
+            painter.end()
+            stu_br2_all.append(real_pic)
+
+        self.stu_br2 = QLabel()
+        self.stu_br2.setScaledContents(True)
+        self.stu_br2.setPixmap(stu_br2_all[col])
+        self.Grid.addWidget(self.stu_br2, 0, 0, 20, 20)
+
+    def build_brige3(self,col):
+        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        full_pixmap = QPixmap(image_path)
+        stu_br3_all = []
+        for i in range(9):
+            org_pic = full_pixmap.copy(i * 141, 1100, 140, 160)
+            org_pic = org_pic.scaled(int(org_pic.width() * self.size_factor * self.stu_size_factor),
+                                     int(org_pic.height() * self.size_factor * self.stu_size_factor))
+
+            real_pic = QPixmap(self.real_width, self.real_height)
+            real_pic.fill(QColor(Qt.transparent))  # 使用透明色填充作为背景
+
+            mo_w=int(real_pic.width()*-0.2)
+            mo_h=int(real_pic.height()*-0.3)
+
+            org_pic = org_pic.transformed(QTransform().rotate(297), mode=Qt.SmoothTransformation)
+
+            painter = QPainter(real_pic)
+            painter.drawPixmap((real_pic.width() - org_pic.width()) // 2-mo_w, (real_pic.height() - org_pic.height()) // 2-mo_h,
+                               org_pic)
+            painter.end()
+            stu_br3_all.append(real_pic)
+
+        self.stu_br3 = QLabel()
+        self.stu_br3.setScaledContents(True)
+        self.stu_br3.setPixmap(stu_br3_all[col])
+        self.Grid.addWidget(self.stu_br3, 0, 0, 20, 20)
+
+
+
     def upgrate1(self):
         if self.stu == None:
             self.build_d()
@@ -275,7 +366,10 @@ class Piece(QWidget):
             self.build_sa()
 
     def mousePressEvent(self, event):
+        if event.button() ==Qt.RightButton:
+            event.ignore()
         if event.button() == Qt.LeftButton:
+            self.blockSignals(True)
             menu = QMenu(self)
             if self.stu == 'd':
                 action_upgrate1 = QAction('upgrate to tp', self)
@@ -309,38 +403,45 @@ class Piece(QWidget):
                     ...
                 else:
 
-                    key0='green'
-                    action_transform = QAction(f'transform to {key0} in {self.distance_shape(self.col,self.colors_dict[key0])} spades', self)
+                    key0 = 'green'
+                    action_transform = QAction(
+                        f'transform to {key0} in {self.distance_shape(self.col, self.colors_dict[key0])} spades', self)
                     action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key0]))
                     menu.addAction(action_transform)
 
-                    key1='yellow'
-                    action_transform = QAction(f'transform to {key1} in {self.distance_shape(self.col,self.colors_dict[key1])} spades', self)
+                    key1 = 'yellow'
+                    action_transform = QAction(
+                        f'transform to {key1} in {self.distance_shape(self.col, self.colors_dict[key1])} spades', self)
                     action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key1]))
                     menu.addAction(action_transform)
 
-                    key2='blue'
-                    action_transform = QAction(f'transform to {key2} in {self.distance_shape(self.col,self.colors_dict[key2])} spades', self)
+                    key2 = 'blue'
+                    action_transform = QAction(
+                        f'transform to {key2} in {self.distance_shape(self.col, self.colors_dict[key2])} spades', self)
                     action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key2]))
                     menu.addAction(action_transform)
 
-                    key3='black'
-                    action_transform = QAction(f'transform to {key3} in {self.distance_shape(self.col,self.colors_dict[key3])} spades', self)
+                    key3 = 'black'
+                    action_transform = QAction(
+                        f'transform to {key3} in {self.distance_shape(self.col, self.colors_dict[key3])} spades', self)
                     action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key3]))
                     menu.addAction(action_transform)
 
-                    key4='brown'
-                    action_transform = QAction(f'transform to {key4} in {self.distance_shape(self.col,self.colors_dict[key4])} spades', self)
+                    key4 = 'brown'
+                    action_transform = QAction(
+                        f'transform to {key4} in {self.distance_shape(self.col, self.colors_dict[key4])} spades', self)
                     action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key4]))
                     menu.addAction(action_transform)
 
-                    key5='red'
-                    action_transform = QAction(f'transform to {key5} in {self.distance_shape(self.col,self.colors_dict[key5])} spades', self)
+                    key5 = 'red'
+                    action_transform = QAction(
+                        f'transform to {key5} in {self.distance_shape(self.col, self.colors_dict[key5])} spades', self)
                     action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key5]))
                     menu.addAction(action_transform)
 
-                    key6='gray'
-                    action_transform = QAction(f'transform to {key6} in {self.distance_shape(self.col,self.colors_dict[key6])} spades', self)
+                    key6 = 'gray'
+                    action_transform = QAction(
+                        f'transform to {key6} in {self.distance_shape(self.col, self.colors_dict[key6])} spades', self)
                     action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key6]))
                     menu.addAction(action_transform)
 
@@ -354,9 +455,8 @@ class Piece(QWidget):
                     # action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key8]))
                     # menu.addAction(action_transform)
 
-
-
             menu.exec_(event.globalPos())
+
 
 
 if __name__ == '__main__':
