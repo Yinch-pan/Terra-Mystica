@@ -1,9 +1,6 @@
 import os.path
 import sys
-
-from PyQt5.QtCore import Qt, QPoint
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QScrollArea, QDesktopWidget
+from PyQt5.QtWidgets import QWidget, QGridLayout, QApplication, QDesktopWidget
 import grid
 
 

@@ -1,7 +1,7 @@
 import os
 import sys
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import *
+
+from PyQt5.QtWidgets import QWidget, QGridLayout
 import piece
 
 BASE_DIR = os.path.realpath(sys.argv[0])
@@ -9,21 +9,22 @@ while not BASE_DIR.endswith('Terra-Mystica'):
     BASE_DIR=os.path.dirname(BASE_DIR)
 
 class map_area(QWidget):
-    def __init__(self, parent=None,map_name='map12.txt'):
+    def __init__(self, parent=None,map_name='map_txt.txt'):
         super().__init__(parent)
         self.read_map(map_name)
         self.initUI()
 
-
     def read_map(self, map_name):
         map_file_path = os.path.join(BASE_DIR,"images\\maps")
-        # map_name = 'map12.txt'
         map_file_path = os.path.join(map_file_path,map_name)
 
 
         with open(map_file_path) as mp:
             area = mp.read().split()
         self.area = [i.split(',') for i in area]
+        # for l in self.area:
+        #     print(len(l))
+
 
     def initUI(self):
         map_area = QGridLayout()
@@ -31,16 +32,9 @@ class map_area(QWidget):
         Nr = 27
         area = [[None for i in range(14)] for j in range(10)]
         map_area.setSpacing(0)
-        # image_path = BASE_DIR+'/images/terrains_hexes.png'  # 替换为你的图片路径
-        # full_pixmap = QPixmap(image_path)
 
         color = {"G": 0, "Y": 1, "B": 2, "U": 3, "R": 4, "K": 5, "S": 6, "I": 7}
 
-        # pixmap = []
-        # for i in range(7):
-        #     tmp_pic = full_pixmap.copy(i * 137, 0, 136, full_pixmap.height())
-        #     tmp_pic = tmp_pic.scaled(tmp_pic.height()//2, tmp_pic.width())
-        #     pixmap.append(tmp_pic)
         nx=-1
         for i in range(0, Nr,3):
             nx+=1
@@ -49,7 +43,9 @@ class map_area(QWidget):
             for j in range(0, Nc, 2):
                 if (i % 6 == 0 and j % 4 == 0) or (i % 6 == 3 and j % 4 == 2 and j != Nc - 2):
                     col = color[self.area[i // 3][j // 4]]
-                    if col == 7:river+=1
+                    if col == 7:
+                        river+=1
+                        col=-1
                     ny+=1
                     area[nx][ny]=piece.Piece(col,nx,ny,river)
                     # area[nx][ny].setScaledContents(True)

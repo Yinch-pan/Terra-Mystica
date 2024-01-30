@@ -1,11 +1,11 @@
 import os.path
 import sys
 
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QScrollArea, QDesktopWidget
+from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel
 import map
-
+import board
 
 BASE_DIR = os.path.realpath(sys.argv[0])
 while not BASE_DIR.endswith('Terra-Mystica'):
@@ -19,24 +19,30 @@ class Grid(QWidget):
     def initUI(self):
         self.main_layout = QGridLayout()
         self.setLayout(self.main_layout)
-        map_area = map.map_area(self, map_name='map12.txt')
         self.main_layout.setSpacing(0)
-        self.main_layout.addWidget(map_area, 0, 0)
 
 
 
-        cult_board = QLabel(self)
-        cult_board_pic = QPixmap(BASE_DIR+'\\images\\cult_board.jpg')
-        cult_board.setScaledContents(True)
-        cult_board.setPixmap(cult_board_pic)
-        self.main_layout.addWidget(cult_board, 0, 20, 20, 10)
+        boarder=board.Board()
+        self.main_layout.addWidget(boarder, 0, 0,37,58)
 
-        function1 = QLabel(self)
-        function1_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
-        function1_pic = function1_pic.scaledToHeight(function1_pic.height() // 2)
-        function1.setScaledContents(True)
-        function1.setPixmap(function1_pic)
-        self.main_layout.addWidget(function1, 20, 0, 4, 15)
+
+
+
+
+
+        # cult_board = QLabel(self)
+        # cult_board_pic = QPixmap(BASE_DIR+'\\images\\cult_board.jpg')
+        # cult_board.setScaledContents(True)
+        # cult_board.setPixmap(cult_board_pic)
+        # self.main_layout.addWidget(cult_board, 0, 20, 20, 10)
+
+        # function1 = QLabel(self)
+        # function1_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')
+        # function1_pic = function1_pic.scaledToHeight(function1_pic.height() // 2)
+        # function1.setScaledContents(True)
+        # function1.setPixmap(function1_pic)
+        # self.main_layout.addWidget(function1, 20, 0, 4, 15)
 
         # function2 = QLabel(self)
         # function2_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')

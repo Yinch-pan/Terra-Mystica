@@ -1,12 +1,10 @@
 import os
 import random
 import sys
-import time
 
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-import grid
+from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QAction, QMenu, QApplication
+from PyQt5.QtGui import QPixmap, QColor, QPainter, QTransform, QFont
+from PyQt5.QtCore import Qt
 
 BASE_PATH = os.path.realpath(sys.argv[0])
 while not BASE_PATH.endswith('Terra-Mystica'):
@@ -42,14 +40,14 @@ class Piece(QWidget):
         self.Grid = QGridLayout()  # 建立网格布局
         self.Grid.setSpacing(0)
         self.Grid.setContentsMargins(0, 0, 0, 0)
-        if self.col!=7:
+        if self.col!=-1:
             self.build_background()
 
         self.setLayout(self.Grid)
 
-        self.build_brige1(1)
-        self.build_brige2(2)
-        self.build_brige3(3)
+        # self.build_brige1(1)
+        # self.build_brige2(2)
+        # self.build_brige3(3)
 
     def build_background(self):
         # 7个地形
@@ -189,7 +187,6 @@ class Piece(QWidget):
 
     def build_te(self):
         self.stu = 'te'
-        print(1)
         self.stu_tp.deleteLater()
         image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
@@ -285,7 +282,7 @@ class Piece(QWidget):
 
         self.ls_shape = QLabel()
         self.ls_shape.setScaledContents(True)
-        self.ls_shape.setPixmap(ls_shapes[1])
+        self.ls_shape.setPixmap(ls_shapes[self.col*2])
         self.Grid.addWidget(self.ls_shape, 0, 0, 20, 20)
 
     def build_brige1(self,col):
@@ -383,6 +380,7 @@ class Piece(QWidget):
     def upgrate2(self):
         if self.stu == None:
             self.build_landscape()
+
         elif self.stu == 'd':
             self.build_tp()
         elif self.stu == 'tp':
@@ -394,96 +392,113 @@ class Piece(QWidget):
         if event.button() ==Qt.RightButton:
             event.ignore()
         if event.button() == Qt.LeftButton:
-            self.blockSignals(True)
             menu = QMenu(self)
-            if self.stu == 'd':
-                action_upgrate1 = QAction('upgrate to tp', self)
-                action_upgrate1.triggered.connect(lambda: self.upgrate1())
-                menu.addAction(action_upgrate1)
+            if self.col==-1:
+                action_build_brige2 = QAction('build brige left', self)
+                action_build_brige2.triggered.connect(lambda: self.build_brige2(7))
+                menu.addAction(action_build_brige2)
 
-            elif self.stu == 'tp':
-                action_upgrate1 = QAction('upgrate to sh', self)
-                action_upgrate1.triggered.connect(lambda: self.upgrate1())
-                menu.addAction(action_upgrate1)
-
-                action_upgrate2 = QAction('upgrate to te', self)
-                action_upgrate2.triggered.connect(lambda: self.upgrate2())
-                menu.addAction(action_upgrate2)
-            elif self.stu == 'te':
-                action_upgrate2 = QAction('upgrate to sa', self)
-                action_upgrate2.triggered.connect(lambda: self.upgrate2())
-                menu.addAction(action_upgrate2)
+                action_build_brige1 = QAction('build brige left down', self)
+                action_build_brige1.triggered.connect(lambda: self.build_brige1(7))
+                menu.addAction(action_build_brige1)
 
 
-            elif self.stu == None:
-                action_upgrate1 = QAction('build d', self)
-                action_upgrate1.triggered.connect(lambda: self.upgrate1())
-                menu.addAction(action_upgrate1)
+                action_build_brige3 = QAction('build brige right down', self)
+                action_build_brige3.triggered.connect(lambda: self.build_brige3(7))
+                menu.addAction(action_build_brige3)
 
-                action_upgrate2 = QAction('build landscape', self)
-                action_upgrate2.triggered.connect(lambda: self.upgrate2())
-                menu.addAction(action_upgrate2)
 
-                if self.col in [self.colors_dict['ice'], self.colors_dict['lava']]:
-                    ...
-                else:
 
-                    key0 = 'green'
-                    action_transform = QAction(
-                        f'transform to {key0} in {self.distance_shape(self.col, self.colors_dict[key0])} spades', self)
-                    action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key0]))
-                    menu.addAction(action_transform)
 
-                    key1 = 'yellow'
-                    action_transform = QAction(
-                        f'transform to {key1} in {self.distance_shape(self.col, self.colors_dict[key1])} spades', self)
-                    action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key1]))
-                    menu.addAction(action_transform)
 
-                    key2 = 'blue'
-                    action_transform = QAction(
-                        f'transform to {key2} in {self.distance_shape(self.col, self.colors_dict[key2])} spades', self)
-                    action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key2]))
-                    menu.addAction(action_transform)
+            else:
+                if self.stu == 'd':
+                    action_upgrate1 = QAction('upgrate to tp', self)
+                    action_upgrate1.triggered.connect(lambda: self.upgrate1())
+                    menu.addAction(action_upgrate1)
 
-                    key3 = 'black'
-                    action_transform = QAction(
-                        f'transform to {key3} in {self.distance_shape(self.col, self.colors_dict[key3])} spades', self)
-                    action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key3]))
-                    menu.addAction(action_transform)
+                elif self.stu == 'tp':
+                    action_upgrate1 = QAction('upgrate to sh', self)
+                    action_upgrate1.triggered.connect(lambda: self.upgrate1())
+                    menu.addAction(action_upgrate1)
 
-                    key4 = 'brown'
-                    action_transform = QAction(
-                        f'transform to {key4} in {self.distance_shape(self.col, self.colors_dict[key4])} spades', self)
-                    action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key4]))
-                    menu.addAction(action_transform)
+                    action_upgrate2 = QAction('upgrate to te', self)
+                    action_upgrate2.triggered.connect(lambda: self.upgrate2())
+                    menu.addAction(action_upgrate2)
+                elif self.stu == 'te':
+                    action_upgrate2 = QAction('upgrate to sa', self)
+                    action_upgrate2.triggered.connect(lambda: self.upgrate2())
+                    menu.addAction(action_upgrate2)
 
-                    key5 = 'red'
-                    action_transform = QAction(
-                        f'transform to {key5} in {self.distance_shape(self.col, self.colors_dict[key5])} spades', self)
-                    action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key5]))
-                    menu.addAction(action_transform)
 
-                    key6 = 'gray'
-                    action_transform = QAction(
-                        f'transform to {key6} in {self.distance_shape(self.col, self.colors_dict[key6])} spades', self)
-                    action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key6]))
-                    menu.addAction(action_transform)
+                elif self.stu == None:
+                    action_upgrate1 = QAction('build d', self)
+                    action_upgrate1.triggered.connect(lambda: self.upgrate1())
+                    menu.addAction(action_upgrate1)
 
-                    # key7='ice'
-                    # action_transform = QAction(f'transform to {key7} in {self.distance_shape(self.col,self.colors_dict[key7])} spades', self)
-                    # action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key7]))
-                    # menu.addAction(action_transform)
-                    #
-                    # key8='lava'
-                    # action_transform = QAction(f'transform to {key8} in {self.distance_shape(self.col,self.colors_dict[key8])} spades', self)
-                    # action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key8]))
-                    # menu.addAction(action_transform)
+                    action_upgrate2 = QAction('build landscape', self)
+                    action_upgrate2.triggered.connect(lambda: self.upgrate2())
+                    # menu.addAction(action_upgrate2)
+
+                    if self.col in [self.colors_dict['ice'], self.colors_dict['lava']]:
+                        ...
+                    else:
+
+                        key0 = 'green'
+                        action_transform = QAction(
+                            f'transform to {key0} in {self.distance_shape(self.col, self.colors_dict[key0])} spades', self)
+                        action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key0]))
+                        menu.addAction(action_transform)
+
+                        key1 = 'yellow'
+                        action_transform = QAction(
+                            f'transform to {key1} in {self.distance_shape(self.col, self.colors_dict[key1])} spades', self)
+                        action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key1]))
+                        menu.addAction(action_transform)
+
+                        key2 = 'blue'
+                        action_transform = QAction(
+                            f'transform to {key2} in {self.distance_shape(self.col, self.colors_dict[key2])} spades', self)
+                        action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key2]))
+                        menu.addAction(action_transform)
+
+                        key3 = 'black'
+                        action_transform = QAction(
+                            f'transform to {key3} in {self.distance_shape(self.col, self.colors_dict[key3])} spades', self)
+                        action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key3]))
+                        menu.addAction(action_transform)
+
+                        key4 = 'brown'
+                        action_transform = QAction(
+                            f'transform to {key4} in {self.distance_shape(self.col, self.colors_dict[key4])} spades', self)
+                        action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key4]))
+                        menu.addAction(action_transform)
+
+                        key5 = 'red'
+                        action_transform = QAction(
+                            f'transform to {key5} in {self.distance_shape(self.col, self.colors_dict[key5])} spades', self)
+                        action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key5]))
+                        menu.addAction(action_transform)
+
+                        key6 = 'gray'
+                        action_transform = QAction(
+                            f'transform to {key6} in {self.distance_shape(self.col, self.colors_dict[key6])} spades', self)
+                        action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key6]))
+                        menu.addAction(action_transform)
+
+                        # key7='ice'
+                        # action_transform = QAction(f'transform to {key7} in {self.distance_shape(self.col,self.colors_dict[key7])} spades', self)
+                        # action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key7]))
+                        # menu.addAction(action_transform)
+                        #
+                        # key8='lava'
+                        # action_transform = QAction(f'transform to {key8} in {self.distance_shape(self.col,self.colors_dict[key8])} spades', self)
+                        # action_transform.triggered.connect(lambda: self.change_ground(self.colors_dict[key8]))
+                        # menu.addAction(action_transform)
 
             menu.exec_(event.globalPos())
-            self.position.raise_()
-
-
+            if self.col!=-1:
+                self.position.raise_()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
