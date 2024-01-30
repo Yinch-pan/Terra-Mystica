@@ -18,7 +18,7 @@ class Piece(QWidget):
         self.pos_y=j
         self.suf_river=ri
         self.col = col
-        self.size_factor = 0.8
+        self.size_factor = 0.6
         self.stu = None
         self.real_width = int(136 * self.size_factor)
         self.real_height = int(156 * self.size_factor)
@@ -84,7 +84,7 @@ class Piece(QWidget):
         org_pic.fill(QColor(Qt.transparent))
         org_pic = org_pic.scaled(int(org_pic.width() * self.size_factor), int(org_pic.height() * self.size_factor))
         painter = QPainter(org_pic)
-        font = QFont("Arial", 12)
+        font = QFont("Arial", int(18*self.size_factor))
         painter.setFont(font)
         painter.drawText(org_pic.rect(), Qt.AlignCenter, f"{chr(self.pos_x+65)}{self.pos_y+1-self.suf_river}")
         painter.end()

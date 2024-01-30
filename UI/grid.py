@@ -22,9 +22,8 @@ class Grid(QWidget):
         self.main_layout.setSpacing(0)
 
 
-
         boarder=board.Board()
-        self.main_layout.addWidget(boarder, 0, 0,37,58)
+        self.main_layout.addWidget(boarder, 0, 0,30,50)
 
 
 

@@ -18,12 +18,9 @@ class map_area(QWidget):
         map_file_path = os.path.join(BASE_DIR,"images\\maps")
         map_file_path = os.path.join(map_file_path,map_name)
 
-
         with open(map_file_path) as mp:
             area = mp.read().split()
         self.area = [i.split(',') for i in area]
-        # for l in self.area:
-        #     print(len(l))
 
 
     def initUI(self):

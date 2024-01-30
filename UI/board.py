@@ -16,7 +16,6 @@ class Board(QWidget):
     def initUI(self):
         self.board_layout=QGridLayout()
 
-
         background_board = QLabel()
         background_board.setScaledContents(True)
         background_pic=QPixmap(os.path.join(BASE_DIR, 'images', 'maps', 'board_all.png'))
