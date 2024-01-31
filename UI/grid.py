@@ -1,11 +1,11 @@
 import os.path
 import sys
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QRect
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel
-import map
+from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel,QPushButton
 import board
+import favor
 
 BASE_DIR = os.path.realpath(sys.argv[0])
 while not BASE_DIR.endswith('Terra-Mystica'):
@@ -20,21 +20,13 @@ class Grid(QWidget):
         self.main_layout = QGridLayout()
         self.setLayout(self.main_layout)
         self.main_layout.setSpacing(0)
-
+        # self.setFixedSize(1920,1080)
 
         boarder=board.Board()
-        self.main_layout.addWidget(boarder, 0, 0,30,50)
+        self.main_layout.addWidget(boarder, 0, 0)
 
-
-
-
-
-
-        # cult_board = QLabel(self)
-        # cult_board_pic = QPixmap(BASE_DIR+'\\images\\cult_board.jpg')
-        # cult_board.setScaledContents(True)
-        # cult_board.setPixmap(cult_board_pic)
-        # self.main_layout.addWidget(cult_board, 0, 20, 20, 10)
+        cult_board=favor.Favor()
+        self.main_layout.addWidget(cult_board, 0, 1)
 
         # function1 = QLabel(self)
         # function1_pic = QPixmap(BASE_DIR+'\\images\\functions\\base\\black\\Darklings.jpg')

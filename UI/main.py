@@ -11,14 +11,15 @@ while not BASE_DIR.endswith('Terra-Mystica'):
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        screen = QDesktopWidget().screenGeometry()
-        self.screen_width, self.screen_height = screen.width(), screen.height()
+        # screen = QDesktopWidget().screenGeometry()
+        # self.screen_width, self.screen_height = screen.width(), screen.height()
 
         self.initUI()
 
     def initUI(self):
 
         self.setGeometry(0, 0, 1920//2, 1080//2)  # 设置窗口的位置和大小
+        # self.setFixedSize(1920, 1080)  # 设置窗口的位置和大小
         self.setWindowTitle('Terra Mystica')  # 设置窗口标题
 
         main_layout=QGridLayout()

@@ -25,6 +25,7 @@ class map_area(QWidget):
 
     def initUI(self):
         map_area = QGridLayout()
+
         Nc = 48+1
         Nr = 27
         area = [[None for i in range(14)] for j in range(10)]
@@ -45,7 +46,6 @@ class map_area(QWidget):
                         col=-1
                     ny+=1
                     area[nx][ny]=piece.Piece(col,nx,ny,river)
-                    # area[nx][ny].setScaledContents(True)
                     map_area.addWidget(area[nx][ny], i, j, 4, 4)
         map_area.setSpacing(0)
 

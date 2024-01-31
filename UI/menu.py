@@ -10,7 +10,7 @@ class Piece(QWidget):
 
     def init_ui(self):
 
-        Singlepiece=piece.Piece()
+        ...
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ class Piece(QWidget):
         self.pos_y=j
         self.suf_river=ri
         self.col = col
-        self.size_factor = 0.6
+        self.size_factor = 0.65
         self.stu = None
         self.real_width = int(136 * self.size_factor)
         self.real_height = int(156 * self.size_factor)
