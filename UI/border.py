@@ -15,7 +15,10 @@ class Border(QWidget):
         super().__init__()
         self.scores=[None]*105
         self.initUI()
-        # self.scores[1].set_token(5)
+
+        # for i in range(1,101):
+        #     self.scores[i].set_p(1)
+
 
     def initUI(self):
         border_layout=QGridLayout()
@@ -55,89 +58,94 @@ class Border(QWidget):
             border_layout.addWidget(token_space,0,2*f*i, 2*f, 2*f)
 
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: red; color: white;")
-        border_layout.addWidget(token_space, 0*f, 0*f, 4*f, 4*f)
+        token_space = tokens.Token()
+        self.scores[20] = token_space
+        border_layout.addWidget(token_space, 0*f, 0*f+1, 4*f, 4*f)
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
+        token_space = tokens.Token()
+        self.scores[19] = token_space
         border_layout.addWidget(token_space, 4*f, 0*f, 3*f, 3*f)
 
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: red; color: white;")
+        token_space = tokens.Token()
+        self.scores[18] = token_space
         border_layout.addWidget(token_space, 7*f, 0*f, 2*f+1, 2*f+1)
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
+        token_space = tokens.Token()
+        self.scores[17] = token_space
         border_layout.addWidget(token_space, 9*f+1, 0*f, 2*f+1, 2*f+1)
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
+        token_space = tokens.Token()
+        self.scores[21] = token_space
         border_layout.addWidget(token_space, 0*f, 4*f, 3*f, 3*f)
 
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: red; color: white;")
+        token_space = tokens.Token()
+        self.scores[22] = token_space
         border_layout.addWidget(token_space, 0*f, 7*f, 2*f+1, 2*f+1)
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
+        token_space = tokens.Token()
+        self.scores[23] = token_space
         border_layout.addWidget(token_space, 0*f, 9*f+1, 2*f+1, 2*f+1)
 
 
 
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: red; color: white;")
-        border_layout.addWidget(token_space, 18*f, 2*f, 4*f, 7*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 22*f, 2*f, 4*f, 7*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: red; color: white;")
-        border_layout.addWidget(token_space, 26*f, 2*f, 4*f, 7*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 30*f, 2*f, 4*f, 7*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: red; color: white;")
-        border_layout.addWidget(token_space, 34*f, 2*f, 4*f, 7*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 38*f, 2*f, 4*f, 7*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 38*f+1, 13*f+1, 3*f, 3*f)
 
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 38*f+1, 22*f, 3*f, 3*f)
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 38*f+1, 31*f, 3*f, 3*f)
 
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 38*f+1, 40*f, 3*f, 3*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 38*f+1, 49*f-1, 3*f, 3*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 38*f+1, 58*f-1, 3*f, 3*f)
-
-        token_space = QLabel()
-        token_space.setStyleSheet("background-color: blue; color: white;")
-        border_layout.addWidget(token_space, 3*f,2*f, 8*f, 7*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: red; color: white;")
+        # border_layout.addWidget(token_space, 18*f, 2*f, 4*f, 7*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 22*f, 2*f, 4*f, 7*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: red; color: white;")
+        # border_layout.addWidget(token_space, 26*f, 2*f, 4*f, 7*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 30*f, 2*f, 4*f, 7*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: red; color: white;")
+        # border_layout.addWidget(token_space, 34*f, 2*f, 4*f, 7*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 38*f, 2*f, 4*f, 7*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 38*f+1, 13*f+1, 3*f, 3*f)
+        #
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 38*f+1, 22*f, 3*f, 3*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 38*f+1, 31*f, 3*f, 3*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 38*f+1, 40*f, 3*f, 3*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 38*f+1, 49*f-1, 3*f, 3*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 38*f+1, 58*f-1, 3*f, 3*f)
+        #
+        # token_space = QLabel()
+        # token_space.setStyleSheet("background-color: blue; color: white;")
+        # border_layout.addWidget(token_space, 3*f,2*f, 8*f, 7*f)
 

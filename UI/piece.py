@@ -6,9 +6,9 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QAction, QMenu, QAppli
 from PyQt5.QtGui import QPixmap, QColor, QPainter, QTransform, QFont
 from PyQt5.QtCore import Qt
 
-BASE_PATH = os.path.realpath(sys.argv[0])
-while not BASE_PATH.endswith('Terra-Mystica'):
-    BASE_PATH = os.path.dirname(BASE_PATH)
+BASE_DIR = os.path.realpath(sys.argv[0])
+while not BASE_DIR.endswith('Terra-Mystica'):
+    BASE_DIR = os.path.dirname(BASE_DIR)
 
 
 class Piece(QWidget):
@@ -51,7 +51,7 @@ class Piece(QWidget):
 
     def build_background(self):
         # 7个地形
-        image_path = os.path.join(BASE_PATH, 'images', 'terrains_hexes.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'terrains_hexes.png')
         full_pixmap = QPixmap(image_path)
         seven_shapes = []
         for i in range(7):
@@ -108,7 +108,7 @@ class Piece(QWidget):
     def change_ground(self, col):
         # 9个转换地形图片
         self.col = col
-        image_path = os.path.join(BASE_PATH, 'images', 'terrain_tiles.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'terrain_tiles.png')
         full_pixmap = QPixmap(image_path)
         transformed_shapes = []
         for i in range(9):
@@ -138,7 +138,7 @@ class Piece(QWidget):
 
     def build_d(self):
         self.stu = 'd'
-        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
         stu_d_all = []
         for i in range(9):
@@ -163,7 +163,7 @@ class Piece(QWidget):
     def build_tp(self):
         self.stu = 'tp'
         self.stu_d.deleteLater()
-        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
         stu_tp_all = []
         for i in range(9):
@@ -188,7 +188,7 @@ class Piece(QWidget):
     def build_te(self):
         self.stu = 'te'
         self.stu_tp.deleteLater()
-        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
         stu_te_all = []
         for i in range(9):
@@ -213,7 +213,7 @@ class Piece(QWidget):
     def build_sh(self):
         self.stu = 'sh'
         self.stu_tp.deleteLater()
-        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
         stu_sh_all = []
         for i in range(9):
@@ -238,7 +238,7 @@ class Piece(QWidget):
     def build_sa(self):
         self.stu = 'sa'
         self.stu_te.deleteLater()
-        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
         stu_sa_all = []
         for i in range(9):
@@ -263,7 +263,7 @@ class Piece(QWidget):
     def build_landscape(self):
         # 20个景观地形图片
         self.stu = 'ls'
-        image_path = os.path.join(BASE_PATH, 'images', 'landscape_tiles.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'landscape_tiles.png')
         full_pixmap = QPixmap(image_path)
         ls_shapes = []
         for i in range(20):
@@ -286,7 +286,7 @@ class Piece(QWidget):
         self.Grid.addWidget(self.ls_shape, 0, 0, 20, 20)
 
     def build_brige1(self,col):
-        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
         stu_br1_all = []
         for i in range(9):
@@ -312,7 +312,7 @@ class Piece(QWidget):
         self.Grid.addWidget(self.stu_br1, 0, 0, 20, 20)
 
     def build_brige2(self,col):
-        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
         stu_br2_all = []
         for i in range(9):
@@ -340,7 +340,7 @@ class Piece(QWidget):
         self.Grid.addWidget(self.stu_br2, 0, 0, 20, 20)
 
     def build_brige3(self,col):
-        image_path = os.path.join(BASE_PATH, 'images', 'structures.png')
+        image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
         stu_br3_all = []
         for i in range(9):

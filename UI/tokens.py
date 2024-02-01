@@ -13,6 +13,7 @@ while not BASE_DIR.endswith('Terra-Mystica'):
 class Token(QWidget):
     def __init__(self):
         super().__init__()
+        self.num=0
         self.size_factor = 1
         self.real_width = 100*self.size_factor
         self.real_height = 100*self.size_factor
@@ -31,6 +32,7 @@ class Token(QWidget):
         self.token_layout.deleteLater()
 
     def set_token(self,col):
+        self.num += 1
         self.stu = 'tk'
         image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
@@ -53,9 +55,10 @@ class Token(QWidget):
         self.tk = QLabel()
         self.tk.setScaledContents(True)
         self.tk.setPixmap(stu_tk_all[col])
-        self.token_layout.addWidget(self.tk)
+        self.token_layout.addWidget(self.tk,0,0)
 
     def set_p(self,col):
+        self.num+=1
         self.stu = 'p'
         image_path = os.path.join(BASE_DIR, 'images', 'structures.png')
         full_pixmap = QPixmap(image_path)
@@ -78,7 +81,7 @@ class Token(QWidget):
         self.p = QLabel()
         self.p.setScaledContents(True)
         self.p.setPixmap(stu_p_all[col])
-        self.token_layout.addWidget(self.p)
+        self.token_layout.addWidget(self.p,0,self.num)
 
 
 if __name__ == '__main__':
