@@ -1,7 +1,6 @@
 import os
 import random
 import sys
-
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QAction, QMenu, QApplication
 from PyQt5.QtGui import QPixmap, QColor, QPainter, QTransform, QFont
 from PyQt5.QtCore import Qt
